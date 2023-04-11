@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\StewardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,4 +19,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::group(['prefix' => 'driver'], function () {
     Route::get('/', [DriverController::class, 'index']);
+});
+
+Route::group(['prefix' => 'steward','as' => 'steward.'],function (){
+   Route::get('raise-a-ticket',[StewardController::class,'index'])->name('form');
+   Route::post('raise-a-ticket',[StewardController::class,'store'])->name('form.store');
 });
