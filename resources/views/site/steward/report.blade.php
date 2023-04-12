@@ -17,8 +17,8 @@
                         <h5 class="card-title">Session Name: {{$incident_report->session->server_name}}</h5>
                         <p class="card-text">Track Name: <strong>{{$incident_report->track_name}}</strong></p>
                         <p class="card-text">Video Link: <a href="{{$incident_report->video_link}}" target="_blank">Click here</a></p>
-                        <p class="card-text">Reporting Car Number: <strong>{{$incident_report->raisedBy()->name}} (#{{$incident_report->your_race_number}})</strong></p>
-                        <p class="card-text">Offending Car Number: <strong>{{$incident_report->offendingDriver()->name}} (#{{$incident_report->offending_car_race_number}})</strong></p>
+                        <p class="card-text">Reporting Driver: <strong>{{$incident_report->raisedBy()->name}} (#{{$incident_report->your_race_number}})</strong></p>
+                        <p class="card-text">Offending Driver: <strong>{{$incident_report->offendingDriver()->name}} (#{{$incident_report->offending_car_race_number}})</strong></p>
 
                         <hr>
                         <p class="card-text">Comments: {{$incident_report->comments}}</p>
