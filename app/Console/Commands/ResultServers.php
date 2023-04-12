@@ -36,8 +36,8 @@ class ResultServers extends Command
             $results = Storage::build([
                 'driver' => $server->driver,
                 'host' => $server->ip_address,
-                'username' => ($server->driver == 'ftp') ? env('FTP_USERNAME') : env('FTP_USERNAME'),
-                'password' => ($server->driver == 'sftp') ? env('SFTP_PASSWORD') : env('SFTP_PASSWORD'),
+                'username' => ($server->driver == 'ftp') ? env('FTP_USERNAME') : env('SFTP_USERNAME'),
+                'password' => ($server->driver == 'ftp') ? env('FTP_PASSWORD') : env('SFTP_PASSWORD'),
                 'port' => $server->port,
                 'root' => $server->root,
             ])->allFiles('results');
@@ -46,8 +46,8 @@ class ResultServers extends Command
                     $file = Storage::build([
                         'driver' => $server->driver,
                         'host' => $server->ip_address,
-                        'username' => ($server->driver == 'ftp') ? env('FTP_USERNAME') : env('FTP_USERNAME'),
-                        'password' => ($server->driver == 'sftp') ? env('SFTP_PASSWORD') : env('SFTP_PASSWORD'),
+                        'username' => ($server->driver == 'ftp') ? env('FTP_USERNAME') : env('SFTP_USERNAME'),
+                        'password' => ($server->driver == 'ftp') ? env('FTP_PASSWORD') : env('SFTP_PASSWORD'),
                         'port' => $server->port,
                         'root' => $server->root,
                     ])->get($result);
