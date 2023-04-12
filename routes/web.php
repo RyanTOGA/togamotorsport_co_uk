@@ -21,7 +21,11 @@ Route::group(['prefix' => 'driver'], function () {
     Route::get('/', [DriverController::class, 'index']);
 });
 
-Route::group(['prefix' => 'steward','as' => 'steward.'],function (){
-   Route::get('raise-a-ticket',[StewardController::class,'index'])->name('form');
-   Route::post('raise-a-ticket',[StewardController::class,'store'])->name('form.store');
+Route::group(['prefix' => 'steward', 'as' => 'steward.'], function () {
+    Route::get('all-incidents',[StewardController::class,'incidents'])->name('incidents');
+    Route::get('raise-a-ticket', [StewardController::class, 'index'])->name('form');
+    Route::post('raise-a-ticket', [StewardController::class, 'store'])->name('form.store');
+    Route::get('incident-report/{id}', [StewardController::class, 'report'])->name('incident');
+    Route::get('incident-report/{id}/give-penalty', [StewardController::class, 'penalty'])->name('incident.penalty');
+    Route::post('incident-report/{id}/give-penalty/save', [StewardController::class, 'apply'])->name('incident.penalty.store');
 });
