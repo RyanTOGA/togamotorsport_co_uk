@@ -13,12 +13,12 @@ class SetServerTableSeeder extends Seeder
      */
     public function run(): void
     {
-        Server::query()->create([
-            'driver' => 'ftp',
-            'ip_address' => 'ftp.circuitcore.net',
-            'port' => 52370,
-            'root' => '/',
-        ]);
+//        Server::query()->create([
+//            'driver' => 'ftp',
+//            'ip_address' => 'ftp.circuitcore.net',
+//            'port' => 52370,
+//            'root' => '/',
+//        ]);
 
         Server::query()->create([
             'driver' => 'sftp',

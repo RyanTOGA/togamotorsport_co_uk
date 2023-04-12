@@ -110,7 +110,7 @@ class StewardController extends Controller
             'is_no_action' => (isset($request->no_further_access)) ? 1 : 0,
         ]);
 
-        return redirect()->back()->withErrors('Penalty has been applied');
+        return redirect()->route('steward.incident',$request->incident_report_id)->with(['success' => 'Penalty has been applied']);
     }
 
     public function incidents()
