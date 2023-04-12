@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StewardFormRequest;
 use App\Models\IncidentReports;
 use App\Models\Penalty;
+use App\Models\RaceDrivers;
 use App\Models\RaceSession;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -37,11 +38,10 @@ class StewardController extends Controller
             return redirect()->back()->withErrors(['track_missmatch' => 'The race session and track combination does not match please try again!']);
         }
 
-        $raceDriverCheck = RaceSession::query()
-            ->where('id', $request->session_id)
-            ->where('track_name', $request->track_name)
-            ->where('your_race_number', $request->your_race_number)
-            ->orWhere('offending_car_race_number', $request->offending_car_race_number)
+        $raceDriverCheck = RaceDrivers::query()
+            ->where('race_id', $raceSessionCheck->id)
+            ->where('race_number', $request->your_race_number)
+            ->where('race_number', $request->offending_car_race_number)
             ->first();
 
         if ($raceDriverCheck == null) {
