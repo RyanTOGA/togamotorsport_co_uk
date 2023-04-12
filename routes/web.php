@@ -22,10 +22,15 @@ Route::group(['prefix' => 'driver'], function () {
 });
 
 Route::group(['prefix' => 'steward', 'as' => 'steward.'], function () {
-    Route::get('all-incidents',[StewardController::class,'incidents'])->name('incidents');
+    Route::get('all-incidents', [StewardController::class, 'incidents'])->name('incidents');
     Route::get('raise-a-ticket', [StewardController::class, 'index'])->name('form');
     Route::post('raise-a-ticket', [StewardController::class, 'store'])->name('form.store');
     Route::get('incident-report/{id}', [StewardController::class, 'report'])->name('incident');
     Route::get('incident-report/{id}/give-penalty', [StewardController::class, 'penalty'])->name('incident.penalty');
     Route::post('incident-report/{id}/give-penalty/save', [StewardController::class, 'apply'])->name('incident.penalty.store');
+    Route::get('incident-report/{id}/delete', [StewardController::class, 'delete'])->name('incident.delete');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

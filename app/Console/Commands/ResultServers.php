@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\RaceDrivers;
 use App\Models\RaceLaps;
 use App\Models\RaceSession;
+use App\Models\Server;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -30,30 +31,25 @@ class ResultServers extends Command
      */
     public function handle()
     {
-        $servers[] = ['ip_address' => '54.36.108.42', 'port' => 22, 'root' => '54.36.108.42_10262', 'driver' => 'sftp'];
-        $servers[] = ['ip_address' => '51.195.89.93', 'port' => 8822, 'root' => '51.195.89.93_9800', 'driver' => 'sftp'];
-        $servers[] = ['ip_address' => '54.36.111.191', 'port' => 8822, 'root' => '54.36.111.191_9800', 'driver' => 'sftp'];
-        $servers[] = ['ip_address' => '141.95.72.107', 'port' => 8822, 'root' => '141.95.72.107_9800', 'driver' => 'sftp'];
-
-
+        $servers = Server::all();
         foreach ($servers as $server) {
             $results = Storage::build([
-                'driver' => $server['driver'],
-                'host' => $server['ip_address'],
-                'username' => env('FTP_USERNAME'),
-                'password' => env('FTP_PASSWORD'),
-                'port' => $server['port'],
-                'root' => $server['root'],
+                'driver' => $server->driver,
+                'host' => $server->ip_address,
+                'username' => ($server->driver == 'ftp') ? env('FTP_USERNAME') : env('FTP_USERNAME'),
+                'password' => ($server->driver == 'sftp') ? env('SFTP_PASSWORD') : env('SFTP_PASSWORD'),
+                'port' => $server->port,
+                'root' => $server->root,
             ])->allFiles('results');
             foreach ($results as $result) {
                 if (Str::contains($result, ['FP', 'Q', 'R'])) {
                     $file = Storage::build([
-                        'driver' => $server['driver'],
-                        'host' => $server['ip_address'],
-                        'username' => env('FTP_USERNAME'),
-                        'password' => env('FTP_PASSWORD'),
-                        'port' => $server['port'],
-                        'root' => $server['root'],
+                        'driver' => $server->driver,
+                        'host' => $server->ip_address,
+                        'username' => ($server->driver == 'ftp') ? env('FTP_USERNAME') : env('FTP_USERNAME'),
+                        'password' => ($server->driver == 'sftp') ? env('SFTP_PASSWORD') : env('SFTP_PASSWORD'),
+                        'port' => $server->port,
+                        'root' => $server->root,
                     ])->get($result);
                     $response = str_replace(chr(0), '', $file);
                     $contents = utf8_encode($response);

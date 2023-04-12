@@ -1,4 +1,4 @@
-@extends('site.layout.layout')
+@extends('site.layout.layout',['page_title' => 'Home'])
 @section('header')
     @include('site.partials.header')
 @endsection

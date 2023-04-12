@@ -41,7 +41,7 @@ class StewardController extends Controller
         $raceDriverCheck = RaceDrivers::query()
             ->where('race_id', $raceSessionCheck->id)
             ->where('race_number', $request->your_race_number)
-            ->where('race_number', $request->offending_car_race_number)
+            ->orWhere('race_number', $request->offending_car_race_number)
             ->first();
 
         if ($raceDriverCheck == null) {
@@ -116,7 +116,14 @@ class StewardController extends Controller
     public function incidents()
     {
         $allIncidents = IncidentReports::all();
-
         return view('site.steward.incidents', ['allIncidents' => $allIncidents]);
+    }
+
+    public function delete(Request $request)
+    {
+        $incident_report_id = $request->segment(3);
+        IncidentReports::query()->find($incident_report_id)->delete();
+
+        return redirect()->back()->withErrors('Incident has been deleted');
     }
 }
