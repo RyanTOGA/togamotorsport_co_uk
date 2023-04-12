@@ -39,6 +39,8 @@ class StewardController extends Controller
 
         //Save Data into DB
         IncidentReports::query()->create($request->except('_token'));
+
+        return redirect()->route('steward.incidents');
     }
 
     /**
@@ -70,9 +72,9 @@ class StewardController extends Controller
     /**
      * Apply A Penalty
      * @param Request $request
-     * @return void
+     * @return RedirectResponse
      */
-    public function apply(Request $request): void
+    public function apply(Request $request): RedirectResponse
     {
         if (isset($request->apply_penalty)) {
             $request->validate([
@@ -96,6 +98,8 @@ class StewardController extends Controller
             'is_warning' => (isset($request->apply_warning)) ? 1 : 0,
             'is_no_action' => (isset($request->no_further_access)) ? 1 : 0,
         ]);
+
+        return redirect()->back()->withErrors('Penalty has been applied');
     }
 
     public function incidents()
