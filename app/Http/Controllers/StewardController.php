@@ -37,6 +37,17 @@ class StewardController extends Controller
             return redirect()->back()->withErrors(['track_missmatch' => 'The race session and track combination does not match please try again!']);
         }
 
+        $raceDriverCheck = RaceSession::query()
+            ->where('id', $request->session_id)
+            ->where('track_name', $request->track_name)
+            ->where('your_race_number', $request->your_race_number)
+            ->orWhere('offending_car_race_number', $request->offending_car_race_number)
+            ->first();
+
+        if ($raceDriverCheck == null) {
+            return redirect()->back()->withErrors(['track_missmatch' => 'The race numbers you have selected do you match the session please try again.']);
+        }
+
         //Save Data into DB
         IncidentReports::query()->create($request->except('_token'));
 
